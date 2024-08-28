@@ -68,11 +68,11 @@
         };
         var openApp = function() {
             
-          window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.example.flutter_application_2;end');
-            alert("aplikasi tersedia");
+          window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.tokopedia.tkpd;end');
         };
         var triggerAppOpen = function() {
           openApp();
+            alert("aplikasi tersedia");
           setTimeout(fallbackToStore, 700);
         };
         if(isAndroid) {
