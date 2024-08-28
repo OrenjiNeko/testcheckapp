@@ -44,7 +44,7 @@
         // var isAndroid = ua.indexOf("android") > -1;
         if(isAndroid) { // if is android
             // your app address for local
-            var ifrSrc = 'intent://bazinga.com/&app_store_redirect=android#/#Intent;scheme=https;package=com.example.flutter_application_2;end';
+            var ifrSrc = 'intent:/com.example.flutter_application_2#Intent;scheme=my_scheme;action=android.intent.action.VIEW;end';
             var ifr = document.createElement('iframe');
             alert("masuk fungsi : " + ifrSrc);
             ifr.src = ifrSrc ;
