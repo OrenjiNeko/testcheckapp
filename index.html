@@ -49,6 +49,7 @@
             alert("masuk fungsi : " + ifrSrc);
             ifr.src = ifrSrc ;
             ifr.onload = function() { // if app is not installed, then will go this function
+            alert("aplikasi tidak tersedia");
                 window.location = 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn';
             };
             ifr.style.display = 'none';
