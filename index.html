@@ -62,18 +62,20 @@
         //     window.location = 'http://google.com';
         // }
 
-    var fallbackToStore = function() {
-      window.location.replace('https://play.google.com/store/apps/details?id=packgename');
-    };
-    var openApp = function() {
-      window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.sdf.android.dsds;end');
-    };
-    var triggerAppOpen = function() {
-      openApp();
-      setTimeout(fallbackToStore, 700);
-    };
-    
-    triggerAppOpen();
+        var fallbackToStore = function() {
+          window.location.replace('https://play.google.com/store/apps/details?id=packgename');
+        };
+        var openApp = function() {
+          window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.sdf.android.dsds;end');
+        };
+        var triggerAppOpen = function() {
+          openApp();
+          setTimeout(fallbackToStore, 700);
+        };
+        if(isAndroid) {
+            
+        triggerAppOpen();
+        };
         /*
         Q&A
         I have a native desktop app as well, how do I link to a custom protocol handler on the desktop?
