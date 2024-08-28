@@ -41,25 +41,25 @@
         // window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
 
         //cara 2
-        if(isAndroid) { // if is android
-            // your app address for local
-            var ifrSrc = 'intent://app/SplashScreen#Intent;scheme=app_;package=com.tokopedia.tkpd;end'';
-            var ifr = document.createElement('iframe');
-            alert("masuk fungsi : " + ifrSrc);
-            ifr.src = ifrSrc ;
-            ifr.onload = function() { // if app is not installed, then will go this function
-            alert("aplikasi tidak tersedia");
-                window.location = 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn';
-            };
-            ifr.style.display = 'none';
-            document.body.appendChild(ifr);
+        // if(isAndroid) { // if is android
+        //     // your app address for local
+        //     var ifrSrc = 'intent://app/SplashScreen#Intent;scheme=app_;package=com.tokopedia.tkpd;end'';
+        //     var ifr = document.createElement('iframe');
+        //     alert("masuk fungsi : " + ifrSrc);
+        //     ifr.src = ifrSrc ;
+        //     ifr.onload = function() { // if app is not installed, then will go this function
+        //     alert("aplikasi tidak tersedia");
+        //         window.location = 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn';
+        //     };
+        //     ifr.style.display = 'none';
+        //     document.body.appendChild(ifr);
 
-            setTimeout(function(){
-                document.body.removeChild(ifr); // remove the iframe element
-            }, 1000);
-        } else { // if is not android
-            window.location = 'http://google.com';
-        }
+        //     setTimeout(function(){
+        //         document.body.removeChild(ifr); // remove the iframe element
+        //     }, 1000);
+        // } else { // if is not android
+        //     window.location = 'http://google.com';
+        // }
 
         // cara 3
         // var fallbackToStore = function() {
