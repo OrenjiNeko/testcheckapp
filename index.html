@@ -63,10 +63,12 @@
         // }
 
         var fallbackToStore = function() {
-          window.location.replace('https://play.google.com/store/apps/details?id=packgename');
+            alert("aplikasi tidak tersedia");
+          window.location.replace('https://play.google.com/store/apps/details?id=com.siman.sensusbmn');
         };
         var openApp = function() {
-          window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.sdf.android.dsds;end');
+            alert("aplikasi tersedia");
+          window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.example.flutter_application_2;end');
         };
         var triggerAppOpen = function() {
           openApp();
