@@ -42,25 +42,38 @@
 
         // var ua = navigator.userAgent.toLowerCase();
         // var isAndroid = ua.indexOf("android") > -1;
-        if(isAndroid) { // if is android
-            // your app address for local
-            var ifrSrc = 'intent:/com.example.flutter_application_2#Intent;scheme=my_scheme;action=android.intent.action.VIEW;end';
-            var ifr = document.createElement('iframe');
-            alert("masuk fungsi : " + ifrSrc);
-            ifr.src = ifrSrc ;
-            ifr.onload = function() { // if app is not installed, then will go this function
-            alert("aplikasi tidak tersedia");
-                window.location = 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn';
-            };
-            ifr.style.display = 'none';
-            document.body.appendChild(ifr);
+        // if(isAndroid) { // if is android
+        //     // your app address for local
+        //     var ifrSrc = 'intent:/com.example.flutter_application_2#Intent;scheme=my_scheme;action=android.intent.action.VIEW;end';
+        //     var ifr = document.createElement('iframe');
+        //     alert("masuk fungsi : " + ifrSrc);
+        //     ifr.src = ifrSrc ;
+        //     ifr.onload = function() { // if app is not installed, then will go this function
+        //     alert("aplikasi tidak tersedia");
+        //         window.location = 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn';
+        //     };
+        //     ifr.style.display = 'none';
+        //     document.body.appendChild(ifr);
 
-            setTimeout(function(){
-                document.body.removeChild(ifr); // remove the iframe element
-            }, 1000);
-        } else { // if is not android
-            window.location = 'http://google.com';
-        }
+        //     setTimeout(function(){
+        //         document.body.removeChild(ifr); // remove the iframe element
+        //     }, 1000);
+        // } else { // if is not android
+        //     window.location = 'http://google.com';
+        // }
+
+    var fallbackToStore = function() {
+      window.location.replace('https://play.google.com/store/apps/details?id=packgename');
+    };
+    var openApp = function() {
+      window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.sdf.android.dsds;end');
+    };
+    var triggerAppOpen = function() {
+      openApp();
+      setTimeout(fallbackToStore, 700);
+    };
+    
+    triggerAppOpen();
         /*
         Q&A
         I have a native desktop app as well, how do I link to a custom protocol handler on the desktop?
