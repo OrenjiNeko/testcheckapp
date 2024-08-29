@@ -20,24 +20,35 @@
 
             alert("the device is : " + navigator.userAgent);
         // Mobile
-        if (isiOS || isAndroid) {
-            alert("the device is : " + isiOS);
-        // Load our custom protocol in the iframe, for Chrome and Opera this burys the error dialog (which is actually HTML)
-        // for iOS we will get a popup error if this protocol is not supported, but it won't block javascript
-        document.getElementById('loader').src = 'custom-protocol://my-app'+window.location.search+window.location.hash;
+        // if (isiOS || isAndroid) {
+        //     alert("the device is : " + isiOS);
+        // // Load our custom protocol in the iframe, for Chrome and Opera this burys the error dialog (which is actually HTML)
+        // // for iOS we will get a popup error if this protocol is not supported, but it won't block javascript
+        // document.getElementById('loader').src = 'custom-protocol://my-app'+window.location.search+window.location.hash;
 
-        // The fallback link for Android needs to be https:// rather than market:// or the device will try to 
-        // load both URLs and only the last one will win. (Especially FireFox, where an "Are You Sure" dialog will appear)
-        // on iOS we can link directly to the App Store as our app switch will fire prior to the switch
-        // If you have a mobile web app, your fallback could be that instead. 
-        fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn' :
-                                    'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8' ;
-        }
+        // // The fallback link for Android needs to be https:// rather than market:// or the device will try to 
+        // // load both URLs and only the last one will win. (Especially FireFox, where an "Are You Sure" dialog will appear)
+        // // on iOS we can link directly to the App Store as our app switch will fire prior to the switch
+        // // If you have a mobile web app, your fallback could be that instead. 
+        // fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn' :
+        //                             'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8' ;
+        // }
 
-        // Now we just wait for everything to execute, if the user is redirected to your custom app
-        // the timeout below will never fire, if a custom app is not present (or the user is on the Desktop)
-        // we will replace the current URL with the fallbackLink (store URL or desktop URL as appropriate)
-        window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
+        // // Now we just wait for everything to execute, if the user is redirected to your custom app
+        // // the timeout below will never fire, if a custom app is not present (or the user is on the Desktop)
+        // // we will replace the current URL with the fallbackLink (store URL or desktop URL as appropriate)
+        // window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
+
+        navigator.getInstalledRelatedApps().then(relatedApps => {
+          for (let app of relatedApps) {
+            console.log(app.platform);
+            console.log(app.url);
+            console.log(app.id);
+            alert("the platform is : " + app.platform);
+            alert("the url is : " + app.url);
+            alert("the id is : " + app.id);
+          }
+        });
 
         //cara 2
         // if(isAndroid) { // if is android
