@@ -1,0 +1,14 @@
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.swift.mobile",
+        "sha256_cert_fingerprints": [
+          "12:AF:2C:88:E5:2A:89:2A:F1:D8:A9:1D:C1:B8:31:80:2E:3B:EB:32:F5:7F:82:B1:6F:F6:08:23:11:3D:3A:72"
+        ]
+      }
+    }
+  ]
