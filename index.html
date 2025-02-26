@@ -6,7 +6,7 @@
     <title>App Redirection</title>
     <style>
         #popup {
-            display: none;
+            display: none; /* Default: tidak muncul */
             position: fixed;
             top: 0;
             left: 0;
@@ -44,30 +44,28 @@
         </div>
     </div>
 
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
             var isAndroid = /Android/.test(navigator.userAgent);
-            var appUrl = "https://eagle.dscid-run.app" + window.location.pathname + window.location.search;
-            var fallbackLink = isAndroid 
-                ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
-                : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
             if (isiOS || isAndroid) {
                 document.getElementById("popup").style.display = "flex";
                 
                 document.getElementById("btnOpenApp").addEventListener("click", function () {
-                    if (isAndroid) {
-                        var intentUrl = "intent://eagle.dscid-run.app" + window.location.pathname + window.location.search +
-                                        "#Intent;scheme=https;package=com.swift.mobile;end;";
-                        window.location.href = intentUrl;
-                    } else {
-                        window.location.href = appUrl;
-                    }
+                    var appURL = "custom-protocol://my-app" + window.location.search + window.location.hash;
+                    var fallbackLink = isAndroid 
+                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
+                        : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
+                    document.getElementById("loader").src = appURL;
+
+                    window.location.href = appURL;
+                    
                     setTimeout(function () {
                         window.location.href = fallbackLink;
-                    }, 3000); // Timeout lebih lama
+                    }, 1500);
                 });
 
                 document.getElementById("btnStay").addEventListener("click", function () {
