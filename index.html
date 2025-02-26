@@ -60,6 +60,8 @@
                         : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
                     document.getElementById("loader").src = appURL;
+
+                    window.location.href = appURL;
                     
                     setTimeout(function () {
                         window.location.href = fallbackLink;
