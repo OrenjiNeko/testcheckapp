@@ -38,7 +38,7 @@
 
     <div id="popup">
         <div class="popup-content">
-            <p>Buka aplikasi atau tetap di halaman ini?</p>
+            <p>Buka aplikasi atau tetap di halaman ini 2?</p>
             <button class="btn-primary" id="btnOpenApp">Menuju Aplikasi</button>
             <button class="btn-secondary" id="btnStay">Tetap di Sini</button>
         </div>
@@ -47,8 +47,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
-            var isAndroid = /Android/.test(navigator.userAgent);
+            var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'),
+            isAndroid = navigator.userAgent.match('Android');
 
             if (isiOS || isAndroid) {
                 document.getElementById("popup").style.display = "flex";
@@ -60,12 +60,8 @@
                         : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
                     document.getElementById("loader").src = appURL;
-
-                    window.location.href = appURL;
                     
-                    setTimeout(function () {
-                        window.location.href = fallbackLink;
-                    }, 1500);
+                    window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
                 });
 
                 document.getElementById("btnStay").addEventListener("click", function () {
