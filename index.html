@@ -6,14 +6,13 @@
     <title>App Redirection</title>
     <style>
         #popup {
-            display: none;
+            display: none; /* Default: tidak muncul */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
-            display: flex;
             justify-content: center;
             align-items: center;
         }
@@ -47,9 +46,9 @@
     <iframe style="display:none" id="loader"></iframe>
 
     <script>
-        (function () {
-            var isiOS = navigator.userAgent.match(/iPhone|iPad|iPod/);
-            var isAndroid = navigator.userAgent.match(/Android/);
+        document.addEventListener("DOMContentLoaded", function () {
+            var isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+            var isAndroid = /Android/.test(navigator.userAgent);
 
             if (isiOS || isAndroid) {
                 document.getElementById("popup").style.display = "flex";
@@ -57,7 +56,7 @@
                 document.getElementById("btnOpenApp").addEventListener("click", function () {
                     var appURL = "custom-protocol://my-app" + window.location.search + window.location.hash;
                     var fallbackLink = isAndroid 
-                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
+                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile&hl=en-US&ah=-qIRS12W--GeoSWozNCq7XTZ3fQ"
                         : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
                     document.getElementById("loader").src = appURL;
@@ -71,7 +70,7 @@
                     document.getElementById("popup").style.display = "none";
                 });
             }
-        })();
+        });
     </script>
 
 </body>
