@@ -6,7 +6,7 @@
     <title>App Redirection</title>
     <style>
         #popup {
-            display: none; /* Default: tidak muncul */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -38,34 +38,36 @@
 
     <div id="popup">
         <div class="popup-content">
-            <p>Buka aplikasi atau tetap di halaman ini 1?</p>
+            <p>Buka aplikasi atau tetap di halaman ini?</p>
             <button class="btn-primary" id="btnOpenApp">Menuju Aplikasi</button>
             <button class="btn-secondary" id="btnStay">Tetap di Sini</button>
         </div>
     </div>
 
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'),
-            isAndroid = navigator.userAgent.match('Android');
+            var isiOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+            var isAndroid = /Android/.test(navigator.userAgent);
+            var appUrl = "https://eagle.dscid-run.app" + window.location.pathname + window.location.search;
+            var fallbackLink = isAndroid 
+                ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
+                : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
             if (isiOS || isAndroid) {
                 document.getElementById("popup").style.display = "flex";
                 
                 document.getElementById("btnOpenApp").addEventListener("click", function () {
-                    var appURL = "https://eagle.dscid-run.app" + window.location.search + window.location.hash;
-                    var fallbackLink = isAndroid 
-                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
-                        : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
+                    if (isAndroid) {
+                        var intentUrl = "intent://eagle.dscid-run.app" + window.location.pathname + window.location.search +
+                                        "#Intent;scheme=https;package=com.swift.mobile;end;";
+                        window.location.href = intentUrl;
+                    } else {
+                        window.location.href = appUrl;
+                    }
 
-                    document.getElementById("loader").src = appURL;
-
-                    // window.location.href = appURL;
-                    
                     setTimeout(function () {
                         window.location.href = fallbackLink;
-                    }, 3000);
+                    }, 3000); // Timeout lebih lama
                 });
 
                 document.getElementById("btnStay").addEventListener("click", function () {
