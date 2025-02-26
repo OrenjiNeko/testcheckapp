@@ -56,7 +56,7 @@
                 document.getElementById("btnOpenApp").addEventListener("click", function () {
                     var appURL = "custom-protocol://my-app" + window.location.search + window.location.hash;
                     var fallbackLink = isAndroid 
-                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile&hl=en-US&ah=-qIRS12W--GeoSWozNCq7XTZ3fQ"
+                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
                         : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
                     document.getElementById("loader").src = appURL;
