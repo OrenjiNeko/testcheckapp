@@ -1,100 +1,78 @@
-<!doctype html>
-<html>
-    <head>
-    <meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App Redirection</title>
-    </head>
-    <body>
-        <!-- iframe used for attempting to load a custom protocol -->
-    <iframe style="display:none" height="0" width="0" id="loader"></iframe>
-
-    <script>(function(){
-
-        // For desktop browser, remember to pass though any metadata on the link for deep linking
-        // var fallbackLink = 'http://example.com/my-web-app/'+window.location.search+window.location.hash;
-
-
-        // Simple device detection
-        var isiOS = navigator.userAgent.match('iPad') || navigator.userAgent.match('iPhone') || navigator.userAgent.match('iPod'),
-            isAndroid = navigator.userAgent.match('Android');
-
-            alert("the device is : " + navigator.userAgent);
-        // Mobile
-        if (isiOS || isAndroid) {
-            alert("the device is : " + isiOS);
-        // Load our custom protocol in the iframe, for Chrome and Opera this burys the error dialog (which is actually HTML)
-        // for iOS we will get a popup error if this protocol is not supported, but it won't block javascript
-        document.getElementById('loader').src = 'custom-protocol://my-app'+window.location.search+window.location.hash;
-
-        // The fallback link for Android needs to be https:// rather than market:// or the device will try to 
-        // load both URLs and only the last one will win. (Especially FireFox, where an "Are You Sure" dialog will appear)
-        // on iOS we can link directly to the App Store as our app switch will fire prior to the switch
-        // If you have a mobile web app, your fallback could be that instead. 
-        fallbackLink = isAndroid ? 'https://play.google.com/store/apps/details?id=com.swift.mobile&hl=en-US&ah=-qIRS12W--GeoSWozNCq7XTZ3fQ' :
-                                    'itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8' ;
+    <style>
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .popup-content button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-primary { background: #007BFF; color: white; }
+        .btn-secondary { background: #6C757D; color: white; }
+    </style>
+</head>
+<body>
 
-        // Now we just wait for everything to execute, if the user is redirected to your custom app
-        // the timeout below will never fire, if a custom app is not present (or the user is on the Desktop)
-        // we will replace the current URL with the fallbackLink (store URL or desktop URL as appropriate)
-        window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
+    <div id="popup">
+        <div class="popup-content">
+            <p>Buka aplikasi atau tetap di halaman ini?</p>
+            <button class="btn-primary" id="btnOpenApp">Menuju Aplikasi</button>
+            <button class="btn-secondary" id="btnStay">Tetap di Sini</button>
+        </div>
+    </div>
 
-        // navigator.getInstalledRelatedApps().then(relatedApps => {
-        //   for (let app of relatedApps) {
-        //     console.log(app.platform);
-        //     console.log(app.url);
-        //     console.log(app.id);
-        //     alert("the platform is : " + app.platform);
-        //     alert("the url is : " + app.url);
-        //     alert("the id is : " + app.id);
-        //   }
-        // });
+    <iframe style="display:none" id="loader"></iframe>
 
-        //cara 2
-        // if(isAndroid) { // if is android
-        //     // your app address for local
-        //     var ifrSrc = 'intent://app/SplashScreen#Intent;scheme=app_;package=com.tokopedia.tkpd;end';
-        //     var ifr = document.createElement('iframe');
-        //     alert("masuk fungsi : " + ifrSrc);
-        //     ifr.src = ifrSrc ;
-        //     ifr.onload = function() { // if app is not installed, then will go this function
-        //     alert("aplikasi tidak tersedia");
-        //         window.location = 'https://play.google.com/store/apps/details?id=com.siman.sensusbmn';
-        //     };
-        //     ifr.style.display = 'none';
-        //     document.body.appendChild(ifr);
+    <script>
+        (function () {
+            var isiOS = navigator.userAgent.match(/iPhone|iPad|iPod/);
+            var isAndroid = navigator.userAgent.match(/Android/);
 
-        //     setTimeout(function(){
-        //         document.body.removeChild(ifr); // remove the iframe element
-        //     }, 1000);
-        // } else { // if is not android
-        //     window.location = 'http://google.com';
-        // }
+            if (isiOS || isAndroid) {
+                document.getElementById("popup").style.display = "flex";
+                
+                document.getElementById("btnOpenApp").addEventListener("click", function () {
+                    var appURL = "custom-protocol://my-app" + window.location.search + window.location.hash;
+                    var fallbackLink = isAndroid 
+                        ? "https://play.google.com/store/apps/details?id=com.swift.mobile&hl=en-US&ah=-qIRS12W--GeoSWozNCq7XTZ3fQ"
+                        : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
-        // cara 3
-        // var fallbackToStore = function() {
-        //     alert("aplikasi tidak tersedia");
-        //   window.location.replace('https://play.google.com/store/apps/details?id=com.siman.sensusbmn');
-        // };
-        // var openApp = function() {
+                    document.getElementById("loader").src = appURL;
+                    
+                    setTimeout(function () {
+                        window.location.href = fallbackLink;
+                    }, 1500);
+                });
 
-        //   window.location.replace('intent://app/SplashScreen#Intent;scheme=app_;package=com.tokopedia.tkpd;end');
-        // };
-        // var triggerAppOpen = function() {
-        //   openApp();
-        //     alert("aplikasi tersedia");
-        //   setTimeout(fallbackToStore, 700);
-        // };
-        // if(isAndroid) {
+                document.getElementById("btnStay").addEventListener("click", function () {
+                    document.getElementById("popup").style.display = "none";
+                });
+            }
+        })();
+    </script>
 
-        // triggerAppOpen();
-        // };
-        /*
-        Q&A
-        I have a native desktop app as well, how do I link to a custom protocol handler on the desktop?
-            IE Only: http://msdn.microsoft.com/en-us/library/ms537512.aspx#Version_Vectors
-            All Other Browsers: Use a custom plugin like iTunes does: http://ax.itunes.apple.com/detection/itmsCheck.js
-        */
-
-    })();</script>
-    </body>
+</body>
+</html>
