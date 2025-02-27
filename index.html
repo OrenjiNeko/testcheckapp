@@ -38,7 +38,7 @@
 
     <div id="popup">
         <div class="popup-content">
-            <p>Buka aplikasi atau tetap di halaman ini 3?</p>
+            <p>Buka aplikasi atau tetap di halaman ini 4?</p>
             <button class="btn-primary" id="btnOpenApp">Menuju Aplikasi</button>
             <button class="btn-secondary" id="btnStay">Tetap di Sini</button>
         </div>
@@ -54,14 +54,24 @@
                 document.getElementById("popup").style.display = "flex";
                 
                 document.getElementById("btnOpenApp").addEventListener("click", function () {
-                    window.location = 'cutom_scheme://';
+
+                    var packageName ="com.swift.mobile";
+                   
                     var fallbackLink = isAndroid 
                         ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
                         : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
                     
+                    var intentUrl = "intent://#Intent;package=" + packageName + ";scheme=android-app;end;";
+    
+                    // Mencoba membuka aplikasi
+                    window.location.href = intentUrl;
                     
-                    window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1000);
+                    // Jika gagal, arahkan ke Play Store setelah beberapa detik
+                    setTimeout(function () {
+                        window.location.href = fallbackLink;
+                    }, 2000); // Beri jeda 2 detik sebelum mengarah ke Play Store
+                    
                 });
 
                 document.getElementById("btnStay").addEventListener("click", function () {
