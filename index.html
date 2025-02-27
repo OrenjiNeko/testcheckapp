@@ -54,12 +54,12 @@
                 document.getElementById("popup").style.display = "flex";
                 
                 document.getElementById("btnOpenApp").addEventListener("click", function () {
-                    var appURL = "custom-protocol://my-app" + window.location.search + window.location.hash;
+                    window.location = 'cutom_scheme://';
                     var fallbackLink = isAndroid 
                         ? "https://play.google.com/store/apps/details?id=com.swift.mobile"
                         : "itms-apps://itunes.apple.com/app/my-app/idxxxxxxxx?mt=8";
 
-                    document.getElementById("loader").src = appURL;
+                    
                     
                     window.setTimeout(function (){ window.location.replace(fallbackLink); }, 1);
                 });
